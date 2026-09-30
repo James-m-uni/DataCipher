@@ -5,7 +5,10 @@ import datetime
 class timeCipher(object):
     def __init__(self):
         self.name = "Time Cipher"
+        self.requiresCustomKey = False
 
+    def getRequiresCustomKey(self):
+        return self.requiresCustomKey
 
     def getName(self):
         return self.name

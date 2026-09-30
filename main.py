@@ -1,12 +1,14 @@
 import tkinter as tk
 
 from Ciphers import timeCipher
+from Ciphers import letterCipher
 
 root = tk.Tk()
 
 timeCipher = timeCipher.timeCipher()
+letterCipher = letterCipher.letterCipher()
 
-cipherTypes = [timeCipher]
+cipherTypes = [timeCipher, letterCipher]
 
 root.title("Cipher")
 welcome = tk.Label(root, text="Welcome to Cipher. Select a cipher option, enter your text then press encode or decode.")
