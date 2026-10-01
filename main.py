@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter.constants import ACTIVE
 
 from Ciphers import timeCipher
 from Ciphers import letterCipher
@@ -15,35 +16,59 @@ root.title("Cipher")
 welcome = tk.Label(root, text="Welcome to Cipher. Select a cipher option, enter your text then press encode or decode.")
 listBox = tk.Listbox(root)
 
-def encrypt(chosenCipher, text):
+def encrypt(chosenCipher, textToEncrypt):
     for x in cipherTypes:
         if x.getName() == chosenCipher:
             #check if the chosen cipher requires a key
             if x.getRequiresCustomKey():
-                pass
+                key = ""
+                keyWindow = tk.Tk()
+                keyWindow.title("Enter encryption key")
+                keyText = tk.Text(keyWindow)
+
+
+
             else:
-                encryptedMsg = x.encrypt(text)
+                encryptedMsg = x.encrypt(textToEncrypt)
 
                 #show message to user
                 messagebox.showinfo("Encrypted", encryptedMsg)
+                return
 
 
 
-def decrypt():
-    pass
+def decrypt(chosenCipher, textToDecrypt):
+    for x in cipherTypes:
+        if x.getName() == chosenCipher:
+            #check if the chosen cipher requires a key
+            if x.getRequiresCustomKey():
+                key = ""
+                keyWindow = tk.Tk()
+                keyWindow.title("Enter encryption key")
+                keyText = tk.Text(keyWindow)
 
-encryptButton = tk.Button(root, text = "encode")
+
+
+            else:
+                unencryptedMsg = x.decrypt(textToDecrypt)
+
+                #show message to user
+                messagebox.showinfo("Unencrypted", unencryptedMsg)
+                return
+
+text = tk.Entry(root, width=50)
+encryptButton = tk.Button(root, text = "encode", command = lambda: encrypt(listBox.get(ACTIVE), text.get()))
+decryptButton = tk.Button(root, text = "decode", command = lambda: decrypt(listBox.get(ACTIVE), text.get()))
+
 
 
 #populate listbox with cipher options
 for i in range(0, len(cipherTypes)):
     listBox.insert(i + 1, cipherTypes[i].getName())
 
-text = tk.Entry(root, width=50)
-
 welcome.pack()
 listBox.pack()
 text.pack()
-
-encrypt("Time Cipher", "This is a test")
+encryptButton.pack()
+decryptButton.pack()
 root.mainloop()
