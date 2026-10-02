@@ -22,9 +22,24 @@ def encrypt(chosenCipher, textToEncrypt):
             #check if the chosen cipher requires a key
             if x.getRequiresCustomKey():
                 key = ""
+
                 keyWindow = tk.Tk()
                 keyWindow.title("Enter encryption key")
-                keyText = tk.Text(keyWindow)
+                keyEntryBox = tk.Entry(keyWindow)
+
+                def getKeyAndEncrypt():
+                    key = keyEntryBox.get()
+                    keyWindow.destroy()
+                    encryptedMsg = x.encrypt(textToEncrypt, key)
+                    messagebox.showinfo("Encrypted Text", encryptedMsg)
+
+                continueButton = tk.Button(keyWindow, text="Confirm key", command=lambda: getKeyAndEncrypt())
+
+                keyEntryBox.pack()
+                continueButton.pack()
+
+                keyWindow.mainloop()
+
 
 
 
@@ -42,10 +57,26 @@ def decrypt(chosenCipher, textToDecrypt):
         if x.getName() == chosenCipher:
             #check if the chosen cipher requires a key
             if x.getRequiresCustomKey():
-                key = ""
-                keyWindow = tk.Tk()
-                keyWindow.title("Enter encryption key")
-                keyText = tk.Text(keyWindow)
+                if x.getRequiresCustomKey():
+                    key = ""
+
+                    keyWindow = tk.Tk()
+                    keyWindow.title("Enter encryption key")
+                    keyEntryBox = tk.Entry(keyWindow)
+
+                    def getKeyAndUnencrypt():
+                        key = keyEntryBox.get()
+                        keyWindow.destroy()
+                        encryptedMsg = x.decrypt(textToDecrypt, key)
+                        messagebox.showinfo("Decrypted Text", encryptedMsg)
+
+                    continueButton = tk.Button(keyWindow, text="Confirm key", command=lambda: getKeyAndUnencrypt())
+
+                    keyEntryBox.pack()
+                    continueButton.pack()
+
+                    keyWindow.mainloop()
+
 
 
 
